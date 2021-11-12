@@ -61,3 +61,4 @@ public class NGram {
     System.exit(job.waitForCompletion(true) ? 0 : 1);
   }
 }
+									   
