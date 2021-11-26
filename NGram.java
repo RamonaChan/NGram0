@@ -35,7 +35,7 @@ public class NGram {
 	//loop through array and to add itr according to n
 	//n = 1
         for(int i=0;i<(itr.length) - 1; i++){
-		word.set(itr[i]+" "+itr[i+1]); 
+		word.set(itr[i]); 
         	context.write(word, one);  
       }
     }
