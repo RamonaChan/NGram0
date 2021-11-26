@@ -21,6 +21,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class NGram {
 
   public static class NGMapper
+	  //process one line at a time
        extends Mapper<Object, Text, Text, IntWritable>{
 
     private final static IntWritable one = new IntWritable(1);
@@ -30,18 +31,20 @@ public class NGram {
                     ) throws IOException, InterruptedException {
       	String []itr=value.toString().split("\\W+"); 
      	//remove all punctuaion, only use words as key
-	//Turn string from book to array
+	//Turn the books from string to array
 	    
 	//loop through array and to add itr according to n
 	//n = 1
         for(int i=0;i<(itr.length) - 1; i++){
 		word.set(itr[i]); 
-        	context.write(word, one);  
+		//for n>1, word.set(itr[i] + " " + itr[i+1] + " " + ... + itr[i+(n-1)]); 
+        	context.write(word, one); //emit key-value as <word, occurence count> format
       }
     }
   }
 
-  public static class NGReducer
+  public static class NGReducer 
+	  // sum up value from all maps
        extends Reducer<Text,IntWritable,Text,IntWritable> {
     private IntWritable result = new IntWritable();
 
